@@ -6,27 +6,20 @@ function App() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const username = e.target.username.value;
-  const password = e.target.password.value;
-
-  // Simulate API login
-  if (username === 'admin' && password === '1234') {
-    // success message to Flutter
-    window.FlutterChannel?.postMessage(JSON.stringify({
-      status: 'success',
-      message: 'Login succeeded',
-      token: 'abc123'
-    }));
-  } else {
-    // error message to Flutter
-    window.FlutterChannel?.postMessage(JSON.stringify({
-      status: 'error',
-      message: 'Invalid credentials'
-    }));
-  }
-};
+    if (username === 'admin' && password === '1234') {
+      window.FlutterChannel?.postMessage(JSON.stringify({
+        status: 'success',
+        message: 'Login succeeded',
+      }));
+    } else {
+      window.FlutterChannel?.postMessage(JSON.stringify({
+        status: 'error',
+        message: 'Invalid credentials',
+      }));
+    }
+  };
 
   return (
     <div style={{ padding: 20 }}>
