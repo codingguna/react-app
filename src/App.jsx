@@ -5,25 +5,28 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const sendMessageToFlutter = (status, message = "") => {
-    const data = { status, message };
-    if (window.FlutterChannel) {
-      window.FlutterChannel.postMessage(JSON.stringify(data));
-    } else {
-      console.warn("FlutterChannel not available");
-    }
-  };
+  const handleSubmit = (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const username = e.target.username.value;
+  const password = e.target.password.value;
 
-    // Fake API simulation
-    if (username === 'admin' && password === '1234') {
-      sendMessageToFlutter("success");
-    } else {
-      sendMessageToFlutter("error", "Invalid username or password");
-    }
-  };
+  // Simulate API login
+  if (username === 'admin' && password === '1234') {
+    // success message to Flutter
+    window.FlutterChannel?.postMessage(JSON.stringify({
+      status: 'success',
+      message: 'Login succeeded',
+      token: 'abc123'
+    }));
+  } else {
+    // error message to Flutter
+    window.FlutterChannel?.postMessage(JSON.stringify({
+      status: 'error',
+      message: 'Invalid credentials'
+    }));
+  }
+};
 
   return (
     <div style={{ padding: 20 }}>
